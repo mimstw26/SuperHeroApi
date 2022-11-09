@@ -1,21 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
+using SuperHeroApi.Repositories;
 
 namespace SuperHeroApi.Model
 {
-    public class Movie
+    public class Movie : BaseEntity
     {
-        [Key]
-        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "The movie title is required")]
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Instructor { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+        public string? Instructor { get; set; }
         public DateTime ReleaseDate { get; set; }
 
-        [ForeignKey("SuperheroId")]
-        public Guid SuperheroId { get; set; }
-        public Superhero Superhero { get; set; }
+        public string? SuperheroId { get; set; }
     }
 }

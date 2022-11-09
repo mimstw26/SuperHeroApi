@@ -1,19 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
+using SuperHeroApi.Repositories;
 
 namespace SuperHeroApi.Model
 {
-    public class Superpower
+    public class Superpower : BaseEntity
     {
-        [Key]
-        public Guid Id { get; set; }
-
         [Required(ErrorMessage = "The superpower is required")]
-        public string SuperPower { get; set; }
-        public string Description { get; set; }
+        public string? SuperPower { get; set; }
+        public string? Description { get; set; }
 
-        [ForeignKey("SuperheroId")]
-        public Guid SuperheroId { get; set; }
-        public Superhero Superhero { get; set; }
+        public string? SuperheroId { get; set; }
     }
 }
