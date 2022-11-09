@@ -2,9 +2,7 @@
 
 namespace SuperHeroApi.Interfaces
 {
-    public interface ISuperpowerRepository
+    public interface ISuperpowerRepository : IBaseRepository<Superpower>
     {
-        Task<IEnumerable<Superpower>> GetAllAsync();
-        Task<Superpower> GetByIdAsync(string id);
     }
 }

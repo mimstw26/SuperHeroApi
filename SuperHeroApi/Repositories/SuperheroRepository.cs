@@ -25,5 +25,19 @@ namespace SuperHeroApi.Repositories
 
             return await _appDbContext.Superhero.Find(filter).FirstOrDefaultAsync();
         }
+
+        public async Task<Superhero> InsertAsync(Superhero entity)
+        {
+            await _appDbContext.Superhero.InsertOneAsync(entity);
+
+            return entity;
+        }
+
+        public async Task<bool> RemoveAsync(string id)
+        {
+            var result = await _appDbContext.Superhero.DeleteOneAsync(Builders<Superhero>.Filter.Eq(_ => _.Id, id));
+
+            return result.DeletedCount > 0;
+        }
     }
 }

@@ -2,9 +2,7 @@
 
 namespace SuperHeroApi.Interfaces
 {
-    public interface ISuperheroRepository
+    public interface ISuperheroRepository : IBaseRepository<Superhero>
     {
-        Task<IEnumerable<Superhero>> GetAllAsync();
-        Task<Superhero> GetByIdAsync(string id);
     }
 }

@@ -2,9 +2,7 @@
 
 namespace SuperHeroApi.Interfaces
 {
-    public interface IMovieRepository
+    public interface IMovieRepository : IBaseRepository<Movie>
     {
-        Task<IEnumerable<Movie>> GetAllAsync();
-        Task<Movie> GetByIdAsync(string id);
     }
 }

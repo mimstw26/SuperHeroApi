@@ -15,12 +15,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<MongoDbConfiguration>(builder.Configuration.GetSection("MongoDbConfiguration"));
 
 // Register custom services for the superheroes
+//builder.Services.AddScoped<IApplicationDbContext,ApplicationDbContext>();
 builder.Services.AddSingleton<ApplicationDbContext>();
 //builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<ISuperheroRepository, SuperheroRepository>();
 builder.Services.AddScoped<ISuperpowerRepository, SuperpowerRepository>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
-builder.Services.AddGraphQLServer().AddQueryType<Query>();
+builder.Services.AddGraphQLServer().AddQueryType<Query>().AddMutationType<Mutations>()
+    .AddSubscriptionType<Subscriptions>().AddInMemorySubscriptions();
 
 var app = builder.Build();
 
@@ -40,5 +42,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapGraphQL();
+
+app.UseWebSockets();
 
 app.Run();
