@@ -1,30 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SuperHeroApi.Data.ContextConfigurations;
+﻿using Microsoft.Extensions.Options;
+using MongoDB.Driver;
+using SuperHeroApi.Interfaces;
 using SuperHeroApi.Model;
 
 namespace SuperHeroApi.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        public ApplicationDbContext(IOptions<MongoDbConfiguration> mongoDbConfiguration)
         {
+            var client = new MongoClient(mongoDbConfiguration.Value.ConnectionString);
+            var database = client.GetDatabase(mongoDbConfiguration.Value.Database);
+
+            Movie = database.GetCollection<Movie>(mongoDbConfiguration.Value.MoviesCollectionName);
+            Superhero = database.GetCollection<Superhero>(mongoDbConfiguration.Value.SuperherosCollectionName);
+            Superpower = database.GetCollection<Superpower>(mongoDbConfiguration.Value.SuperpowersCollectionName);
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            // Generate three GUIDS and place them in an arrays
-            var ids = new[] { Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid() };
-
-            // Apply configuration for the three contexts in our application
-            // This will create the demo data for our GraphQL endpoint.
-            builder.ApplyConfiguration(new SuperheroContextConfiguration(ids));
-            builder.ApplyConfiguration(new SuperpowerContextConfiguration(ids));
-            builder.ApplyConfiguration(new MovieContextConfiguration(ids));
-        }
-
-        // Add the DbSets for each of our models we would like at our database
-        public DbSet<Superhero> Superheroes { get; set; }
-        public DbSet<Superpower> Superpowers { get; set; }
-        public DbSet<Movie> Movies { get; set; }
+        public IMongoCollection<Movie> Movie { get; }
+        public IMongoCollection<Superhero> Superhero { get; }
+        public IMongoCollection<Superpower> Superpower { get; }
     }
 }
