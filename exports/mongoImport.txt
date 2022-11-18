@@ -1,1 +1,1 @@
-mongoimport --uri mongodb+srv://mimstw:rubberDucky+26@superheroapicluster.2vaf2zp.mongodb.net/SuperheroAPIDB --collection Movies --type csv --file "C:\Projects\GraphQL\SuperHeroApi\exports\movies.csv"
+mongoimport --uri mongodb+srv://mimstw:rubberDucky+26@superheroapicluster.2vaf2zp.mongodb.net/SuperheroAPIDB --collection Movies --type json --file 

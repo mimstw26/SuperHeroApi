@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="Data\ContextConfigurations\" />
+    <Folder Include="Types\" />
   </ItemGroup>
 
 </Project>
